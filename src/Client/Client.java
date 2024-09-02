@@ -4,12 +4,6 @@
 package Client;
 
 import java.util.concurrent.TimeoutException;
-
-//import javax.xml.ws.handler.MessageContext;
-
-//import org.omg.CORBA.CTX_RESTRICT_SCOPE;
-//import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
-
 import StateCode.StateCode;
 
 public class Client {
@@ -61,29 +55,29 @@ public class Client {
         }
     }
 
-    private void addLog(int state, String word, String meaning) {
+    private void printLog(int state, String word, String meaning) {
         System.out.println("--LOG: " + String.valueOf(operationCount) + " ------");
         System.out.println("  Request:");
         switch (state) {
             case StateCode.ADD:
-                System.out.println("  Command: ADD");
+                System.out.println("-- Command: ADD");
                 break;
             case StateCode.QUERY:
-                System.out.println("  Command: QUERY");
+                System.out.println("-- Command: QUERY");
                 break;
             case StateCode.REMOVE:
-                System.out.println("  Command: REMOVE");
+                System.out.println("-- Command: REMOVE");
                 break;
             // NEW FUNCTION
             case StateCode.ADD_MEANING:
-                System.out.println("  Command: ADD_MEANING");
+                System.out.println("-- Command: ADD MEANING");
                 break;
             // NEW FUNCTION
             case StateCode.UPDATE:
-                System.out.println("  Command: REMOVE");
+                System.out.println("-- Command: UPDATE");
                 break;
             default:
-                System.out.println("  Error: Unknown Command");
+                System.out.println("--Error: Unknown Command");
                 break;
         }
         System.out.println("  Word: " + word);
@@ -122,11 +116,7 @@ public class Client {
         return resultArr;
     }
 
-    // NEW FUNCTION
-//    public int addMeaning(String word, String meaning) {
-//        String[] resultArr = execute(StateCode.ADD_MEANING, word, meaning);
-//        return Integer.parseInt(resultArr[0]);
-//    }
+
     public int addMeaning(String word, String meaning) {
         String[] resultArr = execute(StateCode.ADD_MEANING, word, meaning);
         int state = Integer.parseInt(resultArr[0]);
@@ -135,18 +125,20 @@ public class Client {
         }
         return state;
     }
-    // NEW FUNCTION
     public int update(String word, String meaning) {
         String[] resultArr = execute(StateCode.UPDATE, word, meaning);
         return Integer.parseInt(resultArr[0]);
     }
 
+    /*
+     * Execute the command and return the result.
+     */
     private String[] execute(int command, String word, String meaning) {
         int state = StateCode.FAIL;
-        addLog(command, word, meaning);
+        printLog(command, word, meaning);
         try {
             System.out.println("Trying to connect to server...");
-            ExecuteThread eThread = new ExecuteThread(address, port, command, word, meaning);
+            StartThread eThread = new StartThread(address, port, command, word, meaning);
             eThread.start();
             eThread.join(1000);
             if (eThread.isAlive()) {

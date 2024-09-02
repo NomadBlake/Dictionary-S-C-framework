@@ -11,14 +11,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.concurrent.TimeoutException;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import StateCode.StateCode;
 
-public class ExecuteThread extends Thread {
+public class StartThread extends Thread {
     private int state;
     private int command;
     private String word;
@@ -51,7 +50,7 @@ public class ExecuteThread extends Thread {
         return resultArr;
     }
 
-    public ExecuteThread(String address, int port, int command, String word, String meaning) {
+    public StartThread(String address, int port, int command, String word, String meaning) {
         this.address = address;
         this.port = port;
         this.state = StateCode.FAIL;
