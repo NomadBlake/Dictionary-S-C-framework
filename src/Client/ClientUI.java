@@ -50,16 +50,16 @@ public class ClientUI {
      * Check the input word and meaning is valid or not.
      */
     private Boolean isValid(String word, String meaning, int command) {
-        if (word.equals("")) {
+        if (word.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Please Enter a word.", "Warning", JOptionPane.WARNING_MESSAGE);
             return false;
-        } else if (command == StateCode.ADD && meaning.equals("")) {
+        } else if (command == StateCode.ADD && meaning.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Please Enter the word's meaning.", "Warning", JOptionPane.WARNING_MESSAGE);
             return false;
-        } else if (command == StateCode.ADD_MEANING && meaning.equals("")) {
+        } else if (command == StateCode.ADD_MEANING && meaning.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Please Enter the meaning to be added.", "Warning", JOptionPane.WARNING_MESSAGE);
             return false;
-        } else if (command == StateCode.UPDATE && meaning.equals("")) {
+        } else if (command == StateCode.UPDATE && meaning.isEmpty()) {
             JOptionPane.showMessageDialog(frame, "Please Enter the meaning to be updated.", "Warning", JOptionPane.WARNING_MESSAGE);
             return false;
         }

@@ -31,7 +31,7 @@ public class Server {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Lack of Parameters:\nPlease run like \"java - jar DictServer.jar <port> <dictionary-file>\"!");
         } catch (NumberFormatException e) {
-            System.out.println("Invalid Port Number: Port number should be between 1024 and 49151!");
+            System.out.println("Invalid Port Number: Port number should be between 1024 and 65535!");
         } catch (Exception e) {
             e.printStackTrace();
         }
