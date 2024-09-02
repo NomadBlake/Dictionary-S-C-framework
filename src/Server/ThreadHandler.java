@@ -37,7 +37,7 @@ public class ThreadHandler extends Thread {
 
             state = handleCommand(command, word, meaning, writer);
 
-            writer.writeUTF(createResJSON(state, meaning).toJSONString());
+            writer.writeUTF(createReqJSON(state, meaning).toJSONString());
             writer.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +81,7 @@ public class ThreadHandler extends Thread {
             state = StateCode.FAIL;
             server.printOperationStatus("QUERY FAIL: Word Not Exist!");
         }
-        writer.writeUTF(createResJSON(state, meaning).toJSONString());
+        writer.writeUTF(createReqJSON(state, meaning).toJSONString());
         writer.flush();
         return state;
     }
@@ -96,7 +96,7 @@ public class ThreadHandler extends Thread {
             state = StateCode.FAIL;
             server.printOperationStatus("ADD FAIL: Word Exist!");
         }
-        writer.writeUTF(createResJSON(state, "").toJSONString());
+        writer.writeUTF(createReqJSON(state, "").toJSONString());
         writer.flush();
         return state;
     }
@@ -111,7 +111,7 @@ public class ThreadHandler extends Thread {
             state = StateCode.FAIL;
             server.printOperationStatus("REMOVE FAIL: Word Exist!");
         }
-        writer.writeUTF(createResJSON(state, "").toJSONString());
+        writer.writeUTF(createReqJSON(state, "").toJSONString());
         writer.flush();
         return state;
     }
@@ -130,7 +130,7 @@ public class ThreadHandler extends Thread {
             state = StateCode.FAIL;
             server.printOperationStatus("ADD MEANING FAIL: Word Not Exist!");
         }
-        writer.writeUTF(createResJSON(state, "").toJSONString());
+        writer.writeUTF(createReqJSON(state, "").toJSONString());
         writer.flush();
         return state;
     }
@@ -145,12 +145,12 @@ public class ThreadHandler extends Thread {
             state = StateCode.FAIL;
             server.printOperationStatus("UPDATE FAIL: Word Not Exist!");
         }
-        writer.writeUTF(createResJSON(state, "").toJSONString());
+        writer.writeUTF(createReqJSON(state, "").toJSONString());
         writer.flush();
         return state;
     }
 
-    private JSONObject createResJSON(int state, String meaning) {
+    private JSONObject createReqJSON(int state, String meaning) {
         JSONObject requestJson = new JSONObject();
         requestJson.put("state", String.valueOf(state));
         requestJson.put("meaning", meaning);
