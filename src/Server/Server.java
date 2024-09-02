@@ -44,7 +44,7 @@ public class Server {
         this.server = null;
     }
 
-    public void printOnBoth(String str) {
+    public void printOperationStatus(String str) {
         System.out.println(str);
         if (ui != null) ui.getlogArea().append(str + '\n');
     }
@@ -66,7 +66,7 @@ public class Server {
             while (true) {
                 Socket clientSocket = server.accept();
                 numOfClient++;
-                printOnBoth("Server: A client connect.\nCurrent Num of client: " + String.valueOf(numOfClient));
+                printOperationStatus("Server: A client connect.\nCurrent Num of client: " + String.valueOf(numOfClient));
                 ThreadHandler dcThread = new ThreadHandler(this, clientSocket, dict);
                 dcThread.start();
             }
@@ -80,9 +80,9 @@ public class Server {
     }
 
     public synchronized void clientDisconnect() {
-        printOnBoth("Server: A client has disconnected");
+        printOperationStatus("Server: A client has disconnected");
         numOfClient--;
-        printOnBoth("Server: Number of clients: " + numOfClient + "\n");
+        printOperationStatus("Server: Number of clients: " + numOfClient + "\n");
     }
 
 }

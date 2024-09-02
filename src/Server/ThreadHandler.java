@@ -176,7 +176,7 @@ public class ThreadHandler extends Thread {
             JSONObject reqJSON = parseRequest(reader.readUTF());
             int command = Integer.parseInt(reqJSON.get("command").toString());
             String word = (String) reqJSON.get("word");
-            server.printOnBoth("-- Get Request --\n-- Command: " + toString(command) + "\n  word: " + word);
+            server.printOperationStatus("-- Get Request --\n-- Command: " + toString(command) + "\n  word: " + word);
 
             int state = StateCode.FAIL;
             String meaning = (String) reqJSON.get("meaning");
@@ -222,10 +222,10 @@ public class ThreadHandler extends Thread {
         if (dict.isWordExist(word)) {
             meaning = dict.query(word);
             state = StateCode.SUCCESS;
-            server.printOnBoth("QUERY SUCCESS!");
+            server.printOperationStatus("QUERY SUCCESS!");
         } else {
             state = StateCode.FAIL;
-            server.printOnBoth("QUERY FAIL: Word Not Exist!");
+            server.printOperationStatus("QUERY FAIL: Word Not Exist!");
         }
         writer.writeUTF(createResJSON(state, meaning).toJSONString());
         writer.flush();
@@ -237,10 +237,10 @@ public class ThreadHandler extends Thread {
         if (!dict.isWordExist(word)) {
             dict.add(word, meaning);
             state = StateCode.SUCCESS;
-            server.printOnBoth("ADD SUCCESS: " + word + "\nMeaning: " + meaning);
+            server.printOperationStatus("ADD SUCCESS: " + word + "\nMeaning: " + meaning);
         } else {
             state = StateCode.FAIL;
-            server.printOnBoth("ADD FAIL: Word Exist!");
+            server.printOperationStatus("ADD FAIL: Word Exist!");
         }
         writer.writeUTF(createResJSON(state, "").toJSONString());
         writer.flush();
@@ -252,10 +252,10 @@ public class ThreadHandler extends Thread {
         if (dict.isWordExist(word)) {
             dict.remove(word);
             state = StateCode.SUCCESS;
-            server.printOnBoth("REMOVE SUCCESS: " + word);
+            server.printOperationStatus("REMOVE SUCCESS: " + word);
         } else {
             state = StateCode.FAIL;
-            server.printOnBoth("REMOVE FAIL: Word Exist!");
+            server.printOperationStatus("REMOVE FAIL: Word Exist!");
         }
         writer.writeUTF(createResJSON(state, "").toJSONString());
         writer.flush();
@@ -267,14 +267,14 @@ public class ThreadHandler extends Thread {
         if (dict.isWordExist(word)) {
             if (dict.addMeaning(word, meaning)) {
                 state = StateCode.SUCCESS;
-                server.printOnBoth("ADD MEANING SUCCESS: " + word + "\nMeaning: " + meaning);
+                server.printOperationStatus("ADD MEANING SUCCESS: " + word + "\nMeaning: " + meaning);
             } else {
                 state = StateCode.MEANING_EXIST;
-                server.printOnBoth("ADD MEANING FAIL: Meaning already exists! Please re-add a different meaning.");
+                server.printOperationStatus("ADD MEANING FAIL: Meaning already exists! Please re-add a different meaning.");
             }
         } else {
             state = StateCode.FAIL;
-            server.printOnBoth("ADD MEANING FAIL: Word Not Exist!");
+            server.printOperationStatus("ADD MEANING FAIL: Word Not Exist!");
         }
         writer.writeUTF(createResJSON(state, "").toJSONString());
         writer.flush();
@@ -286,10 +286,10 @@ public class ThreadHandler extends Thread {
         if (dict.isWordExist(word)) {
             dict.update(word, meaning);
             state = StateCode.SUCCESS;
-            server.printOnBoth("UPDATE SUCCESS: " + word + "\nMeaning: " + meaning);
+            server.printOperationStatus("UPDATE SUCCESS: " + word + "\nMeaning: " + meaning);
         } else {
             state = StateCode.FAIL;
-            server.printOnBoth("UPDATE FAIL: Word Not Exist!");
+            server.printOperationStatus("UPDATE FAIL: Word Not Exist!");
         }
         writer.writeUTF(createResJSON(state, "").toJSONString());
         writer.flush();
